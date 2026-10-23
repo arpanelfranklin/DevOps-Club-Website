@@ -1,0 +1,2239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevOps Club — Bennett University</title>
+  <meta name="description"
+    content="DevOps Club of Bennett University: workshops, hackathons and a student community for cloud, CI/CD and GitOps." />
+  <meta name="theme-color" content="#0b0a14" />
+  <link rel="icon" type="image/png" href="img/favicon.png" />
+  <meta property="og:title" content="DevOps Club — Bennett University" />
+  <meta property="og:description" content="Learn, build, automate and scale. Open to all students." />
+  <meta property="og:image" content="https://YOUR-DOMAIN/img/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Martian+Mono:wght@400&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────────────── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: auto;
+    }
+
+    body {
+      background: #ecebf3;
+      color: #171717;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    /* ─── CUSTOM PROPERTIES (written by JS) ────────────────────────── */
+    :root {
+      --hero-type-y: 0px;
+      --hero-type-scale: 1;
+      --hero-type-alpha: 1;
+      --hero-meta-alpha: 1;
+
+      --manifesto-wipe: 0%;
+      --manifesto-scale: 1;
+
+      --rail-x: 0px;
+      --rail-meter: 0%;
+
+      --packet-alpha: 0;
+      --packet-enter: 38px;
+      --packet-scale: 0.78;
+      --packet-cut: 0;
+      --packet-meter: 0%;
+      --packet-copy-x: 40px;
+
+      --season-y: -4%;
+      --season-scale: 1.10;
+    }
+
+    /* ─── TYPOGRAPHY UTILITIES ─────────────────────────────────────── */
+    .t-display {
+      font-family: 'Anton', sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: -.03em;
+      line-height: .86;
+    }
+
+    .t-mono {
+      font-family: 'Martian Mono', monospace;
+      font-weight: 400;
+      font-size: 10.5px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .t-muted {
+      color: rgba(23, 23, 23, .56);
+    }
+
+    .t-red {
+      color: var(--accent);
+    }
+
+    /* ─── WORD-SPLIT SPANS ──────────────────────────────────────────── */
+    .word-reveal .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(.42em);
+      transition: opacity .55s cubic-bezier(.22, 1, .36, 1) var(--d, 0ms),
+        transform .55s cubic-bezier(.22, 1, .36, 1) var(--d, 0ms);
+    }
+
+    .word-reveal.revealed .word {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── DATA-REV ATOMS ────────────────────────────────────────────── */
+    [data-rev] {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .55s cubic-bezier(.22, 1, .36, 1) var(--d, 0ms),
+        transform .55s cubic-bezier(.22, 1, .36, 1) var(--d, 0ms);
+    }
+
+    [data-rev].revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── NAV ───────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      mix-blend-mode: normal;
+      pointer-events: none;
+    }
+
+    nav * {
+      pointer-events: auto;
+    }
+
+    .nav-mark {
+      font-family: 'Anton', sans-serif;
+      font-size: 18px;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+      color: #fbfaff;
+      text-decoration: none;
+    }
+
+    .nav-mark span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Martian Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(251, 250, 255, .72);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: #fbfaff;
+    }
+    .nav-links {
+  background: rgba(11,10,20,.78);
+  padding: 8px 16px;
+  border-radius: 999px;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    }
+    
+
+    /* ─── STAGE WRAPPER ─────────────────────────────────────────────── */
+    .stage {
+      position: relative;
+    }
+
+    .stage-inner {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      overflow: hidden;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+   STAGE 1 — HERO
+══════════════════════════════════════════════════════════════════ */
+    #stage-hero {
+      height: 280svh;
+      background: #0b0a14;
+    }
+
+    #stage-hero .stage-inner {
+      background: #0b0a14;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-lockup {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      transform: translateY(var(--hero-type-y)) scale(var(--hero-type-scale));
+      opacity: var(--hero-type-alpha);
+      will-change: transform, opacity;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(18px, 3vw, 38px);
+      color: rgba(251, 250, 255, .72);
+      letter-spacing: -.02em;
+      line-height: .86;
+      text-transform: uppercase;
+      white-space: nowrap;
+      /* sized to fit "Heirloom Seed House" — 19 chars */
+      font-size: min(clamp(18px, 3vw, 38px), calc(92vw / (19 * .44)));
+      margin-bottom: .35em;
+    }
+
+    .hero-brand {
+      font-family: 'Anton', sans-serif;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: -.045em;
+      line-height: .86;
+      white-space: nowrap;
+      /* sized to fit "Fallow Row" — 10 chars */
+      font-size: min(clamp(60px, 16vw, 220px), calc(92vw / (10 * .44)));
+      display: block;
+    }
+
+    .hero-meta {
+      position: absolute;
+      bottom: 32px;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 40px;
+      opacity: var(--hero-meta-alpha);
+    }
+
+    .hero-meta-item {
+      color: rgba(251, 250, 255, .45);
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+   STAGE 2 — MANIFESTO
+══════════════════════════════════════════════════════════════════ */
+    #stage-manifesto {
+      height: 260svh;
+      background: #ecebf3;
+    }
+
+    #stage-manifesto .stage-inner {
+      background: #ecebf3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+    }
+
+    .manifesto-wrap {
+      position: relative;
+      width: min-content;
+      max-width: 100%;
+      transform: scale(var(--manifesto-scale));
+      will-change: transform;
+    }
+
+    .manifesto-base {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(34px, 5.6vw, 78px);
+      text-transform: uppercase;
+      letter-spacing: -.03em;
+      line-height: .9;
+      color: rgba(23, 23, 23, .34);
+      user-select: none;
+    }
+
+    .manifesto-fill {
+      position: absolute;
+      inset: 0;
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(34px, 5.6vw, 78px);
+      text-transform: uppercase;
+      letter-spacing: -.03em;
+      line-height: .9;
+      color: #171717;
+      clip-path: inset(calc(100% - var(--manifesto-wipe)) -.15em -.15em -.15em);
+      will-change: clip-path;
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+   STAGE 3 — CARD RAIL
+══════════════════════════════════════════════════════════════════ */
+    #stage-rail {
+      height: 340svh;
+      background: #ecebf3;
+    }
+
+    #stage-rail .stage-inner {
+      background: #ecebf3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .rail-header {
+      position: absolute;
+      top: 44px;
+      left: 40px;
+      right: 40px;
+      z-index: 2;
+    }
+
+    .rail-heading {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(28px, 4.5vw, 58px);
+      text-transform: uppercase;
+      letter-spacing: -.035em;
+      line-height: .86;
+    }
+
+    .rail-hint {
+      margin-top: 10px;
+      color: rgba(23, 23, 23, .56);
+    }
+
+    .rail-track-wrap {
+      width: 100%;
+      overflow: visible;
+      padding: 0 40px;
+    }
+
+    .rail-track {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 20px;
+      transform: translateX(var(--rail-x));
+      will-change: transform;
+    }
+
+    .card {
+      flex: 0 0 clamp(230px, 26vw, 330px);
+      border: 1.5px solid #171717;
+      background: #fbfaff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-plate {
+      width: 100%;
+      aspect-ratio: 4/3;
+      display: block;
+    }
+
+    .card-body {
+      padding: 16px 18px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .card-name {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(20px, 2.2vw, 28px);
+      text-transform: uppercase;
+      letter-spacing: -.03em;
+      line-height: .9;
+    }
+
+    .card-type {
+      color: rgba(23, 23, 23, .56);
+    }
+
+    .card-price {
+      margin-top: auto;
+      color: var(--accent);
+      font-family: 'Martian Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .rail-meter-wrap {
+      position: absolute;
+      bottom: 44px;
+      left: 40px;
+      right: 40px;
+    }
+
+    .rail-meter-track {
+      width: 100%;
+      height: 1px;
+      background: rgba(23, 23, 23, .16);
+    }
+
+    .rail-meter-fill {
+      height: 1px;
+      background: var(--accent);
+      width: var(--rail-meter);
+      will-change: width;
+      transition: width .05s linear;
+    }
+
+    /* Reduced motion: wrap cards */
+    @media (prefers-reduced-motion: reduce) {
+      .rail-track {
+        flex-wrap: wrap;
+        justify-content: center;
+        transform: none !important;
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+   STAGE 4 — ARTIFACT
+══════════════════════════════════════════════════════════════════ */
+    #stage-artifact {
+      height: 420svh;
+      background: #0b0a14;
+    }
+
+    #stage-artifact .stage-inner {
+      background: #0b0a14;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+      padding: 0 60px;
+    }
+
+    .artifact-copy {
+      transform: translateX(calc(var(--packet-copy-x) * -1));
+      opacity: var(--packet-alpha);
+      will-change: transform, opacity;
+    }
+
+    .artifact-kicker {
+      color: rgba(251, 250, 255, .45);
+      margin-bottom: 14px;
+    }
+
+    .artifact-headline {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(36px, 5vw, 68px);
+      color: #fbfaff;
+      text-transform: uppercase;
+      letter-spacing: -.04em;
+      line-height: .86;
+      margin-bottom: 20px;
+    }
+
+    .artifact-cues {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 32px;
+    }
+
+    .cue {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(251, 250, 255, .1);
+      padding: 10px 14px;
+      opacity: .28;
+      transition: opacity .4s cubic-bezier(.22, 1, .36, 1),
+        border-color .4s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .cue.lit {
+      opacity: 1;
+      border-color: var(--accent);
+    }
+
+    .cue-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(251, 250, 255, .28);
+      flex-shrink: 0;
+      transition: background .3s;
+    }
+
+    .cue.lit .cue-dot {
+      background: var(--accent);
+    }
+
+    .cue-label {
+      color: rgba(251, 250, 255, .72);
+    }
+
+    .artifact-status {
+      margin-top: 24px;
+      color: var(--accent);
+      min-height: 1.4em;
+    }
+
+    /* Packet */
+    .artifact-packet-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: var(--packet-alpha);
+      transform: translateY(var(--packet-enter)) scale(var(--packet-scale));
+      will-change: transform, opacity;
+    }
+
+    .packet {
+      position: relative;
+      width: min(340px, 44vw);
+      aspect-ratio: 3/4;
+      background: #fbfaff;
+      border: 1.5px solid #171717;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .packet-head {
+      border-bottom: 1.5px solid #171717;
+      padding: 14px 18px 12px;
+    }
+
+    .packet-head-mono {
+      color: rgba(23, 23, 23, .56);
+      margin-bottom: 4px;
+    }
+
+    .packet-head-name {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(24px, 3.5vw, 44px);
+      text-transform: uppercase;
+      letter-spacing: -.04em;
+      line-height: .86;
+    }
+
+    .packet-plate {
+      flex: 1;
+      width: 100%;
+      display: block;
+      min-height: 0;
+    }
+
+    .packet-foot {
+      border-top: 1.5px solid #171717;
+      padding: 10px 18px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .packet-foot-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .packet-foot-key {
+      color: rgba(23, 23, 23, .56);
+    }
+
+    .packet-foot-val {
+      color: var(--accent);
+      font-family: 'Martian Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      min-width: 6ch;
+      text-align: right;
+    }
+
+    /* Perforation */
+    .packet-perf {
+      position: absolute;
+      left: -2px;
+      right: -2px;
+      height: 0;
+      border-top: 2px dashed #171717;
+      top: calc(38%);
+      transform: translateY(calc(var(--packet-cut) * -6px));
+      opacity: var(--packet-cut);
+      will-change: transform, opacity;
+      pointer-events: none;
+    }
+
+    /* Meter bar */
+    .artifact-meter-wrap {
+      position: absolute;
+      bottom: 44px;
+      left: 60px;
+      right: 60px;
+    }
+
+    .artifact-meter-track {
+      width: 100%;
+      height: 1px;
+      background: rgba(251, 250, 255, .1);
+    }
+
+    .artifact-meter-fill {
+      height: 1px;
+      background: var(--accent);
+      width: var(--packet-meter);
+      will-change: width;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+   STAGE 5 — SEASON BAND
+══════════════════════════════════════════════════════════════════ */
+    #stage-season {
+      height: 300svh;
+      background: #ecebf3;
+    }
+
+    #stage-season .stage-inner {
+      background: #ecebf3;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 40px 64px;
+      overflow: hidden;
+    }
+
+    #season-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform: translateY(var(--season-y)) scale(var(--season-scale));
+      will-change: transform;
+    }
+
+    .season-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .season-headline {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(42px, 7vw, 100px);
+      text-transform: uppercase;
+      letter-spacing: -.04em;
+      line-height: .86;
+      margin-bottom: 48px;
+    }
+
+    .season-chapters {
+      display: flex;
+      gap: 40px;
+    }
+
+    .chapter {
+      flex: 1;
+      opacity: .3;
+      transition: opacity .6s cubic-bezier(.65, 0, .35, 1);
+      border-top: 1px solid rgba(23, 23, 23, .16);
+      padding-top: 16px;
+    }
+
+    .chapter.active {
+      opacity: 1;
+    }
+
+    .chapter-label {
+      margin-bottom: 8px;
+    }
+
+    .chapter-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(22px, 2.8vw, 36px);
+      text-transform: uppercase;
+      letter-spacing: -.03em;
+      line-height: .9;
+      margin-bottom: 10px;
+    }
+
+    .chapter-body {
+      color: rgba(23, 23, 23, .72);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+   PRICE TABLE
+══════════════════════════════════════════════════════════════════ */
+    .section-price {
+      background: #ecebf3;
+      padding: 100px 40px;
+      border-top: 1.5px solid #171717;
+    }
+
+    .section-heading {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(32px, 5vw, 64px);
+      text-transform: uppercase;
+      letter-spacing: -.04em;
+      line-height: .86;
+      margin-bottom: 48px;
+    }
+
+    .price-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .price-table thead tr {
+      border-bottom: 1.5px solid #171717;
+    }
+
+    .price-table th {
+      font-family: 'Martian Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(23, 23, 23, .56);
+      padding: 0 0 12px;
+      text-align: left;
+      font-weight: 400;
+    }
+
+    .price-table th:last-child,
+    .price-table td:last-child {
+      text-align: right;
+    }
+
+    .price-table tbody tr {
+      border-bottom: 1px solid rgba(23, 23, 23, .16);
+    }
+
+    .price-table td {
+      padding: 16px 0;
+      font-size: 15px;
+    }
+
+    .price-table td:first-child {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(18px, 1.8vw, 24px);
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+    }
+
+    .price-table td.price-val {
+      color: var(--accent);
+      font-family: 'Martian Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+   FAQ
+══════════════════════════════════════════════════════════════════ */
+    .section-faq {
+      background: #ecebf3;
+      padding: 100px 40px;
+      border-top: 1.5px solid #171717;
+      max-width: 860px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(23, 23, 23, .16);
+    }
+
+    details summary {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 20px 0;
+      cursor: pointer;
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(18px, 2vw, 26px);
+      text-transform: uppercase;
+      letter-spacing: -.025em;
+    }
+
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details summary::after {
+      content: '+';
+      font-family: 'Anton', sans-serif;
+      font-size: 22px;
+      color: rgba(23, 23, 23, .4);
+      flex-shrink: 0;
+      margin-left: 20px;
+      transition: transform .3s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    details[open] summary::after {
+      content: '−';
+    }
+
+    details .faq-answer {
+      padding: 0 0 20px;
+      color: rgba(23, 23, 23, .72);
+      line-height: 1.6;
+      font-size: 15px;
+      max-width: 68ch;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════════════════════ */
+    footer {
+      background: #0b0a14;
+      color: rgba(251, 250, 255, .56);
+      padding: 80px 40px 48px;
+      border-top: 1.5px solid rgba(251, 250, 255, .12);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+    .footer-brand-name {
+      font-family: 'Anton', sans-serif;
+      font-size: 28px;
+      letter-spacing: -.03em;
+      text-transform: uppercase;
+      color: #fbfaff;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand-name span {
+      color: var(--accent);
+    }
+
+    .footer-tagline {
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 28ch;
+    }
+
+    .footer-col-head {
+      font-family: 'Martian Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(251, 250, 255, .35);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: rgba(251, 250, 255, .56);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color .2s;
+    }
+
+    .footer-links a:hover {
+      color: #fbfaff;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(251, 250, 255, .1);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav {
+        padding: 16px 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      #stage-artifact .stage-inner {
+        grid-template-columns: 1fr;
+        padding: 80px 24px 24px;
+        gap: 32px;
+      }
+
+      .artifact-packet-wrap {
+        display: none;
+      }
+
+      .season-chapters {
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+
+      .section-price,
+      .section-faq {
+        padding: 60px 24px;
+      }
+
+      .hero-meta {
+        padding: 0 20px;
+      }
+
+      .rail-track-wrap {
+        padding: 0 20px;
+      }
+    }
+
+    .card-photo {
+      width: 100%;
+      aspect-ratio: 4/3;
+      display: block;
+      object-fit: cover;
+      object-position: center 20%;
+      border-bottom: 1.5px solid #171717;
+      filter: grayscale(1) contrast(1.05);
+      transition: filter .4s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .card:hover .card-photo {
+      filter: none;
+    }
+
+    .card-photo.is-empty {
+      filter: none;
+      opacity: .7;
+    }
+
+    .person-name {
+      color: #171717;
+      font-size: 11px;
+    }
+
+
+    /* ═══ DEVOPS THEME — logo palette ═══ */
+    :root {
+      --accent: #6d2fc9;
+      --blue: #5b9bd5;
+    }
+
+    #stage-hero,
+    #stage-artifact,
+    footer,
+    nav {
+      --accent: #a97bff;
+    }
+
+    .packet {
+      --accent: #6d2fc9;
+    }
+
+    nav {
+      background: transparent;
+      /* -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); */
+      border-bottom: 1px solid rgba(251, 250, 255, .08);
+      padding-block: 12px;
+    }
+
+    .nav-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo {
+      height: 34px;
+      width: auto;
+      display: block;
+    }
+
+    .hero-logo {
+      display: block;
+      width: clamp(84px, 11vw, 132px);
+      height: auto;
+      margin: 0 auto 22px;
+    }
+
+    .hero-brand {
+      background: linear-gradient(90deg, var(--blue), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+
+    .rail-meter-fill,
+    .artifact-meter-fill {
+      background: linear-gradient(90deg, var(--blue), var(--accent));
+    }
+
+    .packet-plate {
+      flex: 1 1 0;
+      min-height: 0;
+      width: 100%;
+      object-fit: contain;
+      background: #000;
+      padding: 14px;
+    }
+
+    .footer-brand-name {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-logo {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+    .footer-bottom {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.footer-bottom .t-mono {
+  color: rgba(251,250,255,.5);   /* light shade, medium opacity */
+  font-size: 10px;
+  letter-spacing: .12em;
+  line-height: 1.7;
+}
+.footer-copy a {
+  color: rgba(251,250,255,.7);   /* slightly brighter so the link reads as a link */
+}
+.footer-copy a:hover { color: #fbfaff; }
+
+.socials { display:flex; gap:8px; margin-top:auto; }
+.socials a {
+  width:34px; height:34px; display:grid; place-items:center;
+  border:1.5px solid #171717; color:#171717;
+  transition: background .2s, color .2s, border-color .2s, transform .2s;
+}
+.socials a:hover { background:var(--accent); border-color:var(--accent); color:#fbfaff; transform:translateY(-2px); }
+.socials svg { width:16px; height:16px; display:block; }
+/* .card-photo[alt^="Arpanel"] { filter: none; } */
+
+#ether-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  opacity: .55;
+  background: radial-gradient(ellipse at 50% 60%, #1a1233 0%, #0b0a14 70%); /* shown if WebGL is unavailable */
+}
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── NAV ─────────────────────────────────────────────────────── -->
+  <nav aria-label="Primary navigation">
+    <a href="#" class="nav-mark" data-rev style="--d:0ms"><img src="img/devops-logo.png" alt="" class="nav-logo"></a>
+    <ul class="nav-links">
+      <li><a href="#stage-rail" data-rev style="--d:40ms">Positions</a></li>
+      <li><a href="#stage-artifact" data-rev style="--d:80ms">About</a></li>
+      <li><a href="#stage-season" data-rev style="--d:120ms">Journey</a></li>
+      <li><a href="#section-price" data-rev style="--d:160ms">Events</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+     STAGE 1 — HERO
+══════════════════════════════════════════════════════════════════ -->
+  <section id="stage-hero" class="stage" aria-label="Hero">
+    <div class="stage-inner">
+      <canvas id="ether-canvas" aria-hidden="true"></canvas>
+
+      <div class="hero-lockup" aria-label="DevOps Club of Bennett University">
+        <img src="img/devops-logo.png" alt="DevOps Club logo" class="hero-logo">
+        <div class="hero-eyebrow t-display" id="hero-eyebrow">Club of Bennett University</div>
+        <span class="hero-brand t-display" id="hero-brand">DevOps</span>
+      </div>
+
+      <div class="hero-meta" aria-hidden="true">
+        <span class="t-mono hero-meta-item" data-rev style="--d:200ms">Bennett University · Greater Noida</span>
+        <span class="t-mono hero-meta-item" data-rev style="--d:260ms">Open to All · Free Workshops</span>
+        <span class="t-mono hero-meta-item" data-rev style="--d:320ms">Scroll to Begin</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+     STAGE 2 — MANIFESTO
+══════════════════════════════════════════════════════════════════ -->
+  <section id="stage-manifesto" class="stage" aria-label="Manifesto">
+    <div class="stage-inner">
+      <div class="manifesto-wrap" role="heading" aria-level="2">
+        <!-- base layer: faded -->
+        <div class="manifesto-base t-display" aria-hidden="true">You don't truly know your system until 3:00 AM in
+          production</div>
+        <!-- fill layer: clipped -->
+        <div class="manifesto-fill t-display" aria-label="You don't truly know your system until 3:00 AM in production">
+          You don't truly know your system until 3:00 AM in production</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+     STAGE 3 — CARD RAIL
+══════════════════════════════════════════════════════════════════ -->
+  <section id="stage-rail" class="stage" aria-label="Positions">
+    <div class="stage-inner">
+      <div class="rail-header">
+        <h2 class="rail-heading t-display word-reveal" id="rail-heading">DevOps Club Positions</h2>
+        <p class="t-mono t-muted rail-hint" data-rev style="--d:80ms">Scroll to Browse — Core Leadership & Team Leads
+        </p>
+      </div>
+
+      <div class="rail-track-wrap" role="list" aria-label="DevOps Club positions">
+        <div class="rail-track" id="rail-track">
+
+          <article class="card" role="listitem" data-rev style="--d:0ms">
+            <canvas class="card-plate" data-plate="0" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">President</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Executive Board · Leader</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Core Council</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" data-rev style="--d:60ms">
+            <canvas class="card-plate" data-plate="1" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">Vice President</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Executive Board · Co-Leader</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Core Council</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" data-rev style="--d:120ms">
+            <canvas class="card-plate" data-plate="2" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">General Secretary</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Executive Board · Operations</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Core Council</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" data-rev style="--d:180ms">
+            <canvas class="card-plate" data-plate="3" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">Treasurer</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Executive Board · Finance</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Core Council</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" data-rev style="--d:240ms">
+            <canvas class="card-plate" data-plate="4" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">Tech Head</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Technical Domain · Lead</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Domain Lead</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" data-rev style="--d:300ms">
+            <canvas class="card-plate" data-plate="5" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">Tech Co-Head</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Technical Domain · Co-Lead</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Domain Co-Lead</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" data-rev style="--d:360ms">
+            <canvas class="card-plate" data-plate="6" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">PR Head</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Public Relations · Lead</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Domain Lead</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" data-rev style="--d:420ms">
+            <canvas class="card-plate" data-plate="7" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">PR Co-Head</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Public Relations · Co-Lead</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Domain Co-Lead</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" data-rev style="--d:480ms">
+            <canvas class="card-plate" data-plate="8" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">Management Head</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Management Domain · Lead</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Domain Lead</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" data-rev style="--d:540ms">
+            <canvas class="card-plate" data-plate="9" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">Management Co-Head</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Management Domain · Co-Lead</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Domain Co-Lead</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" data-rev style="--d:600ms">
+            <canvas class="card-plate" data-plate="10" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">Event Head</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Events Domain · Lead</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Domain Lead</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" data-rev style="--d:660ms">
+            <canvas class="card-plate" data-plate="11" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">Event Co-Head</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Events Domain · Co-Lead</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Domain Co-Lead</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" data-rev style="--d:720ms">
+            <canvas class="card-plate" data-plate="12" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">Design Head</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Design Domain · Lead</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Domain Lead</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" data-rev style="--d:780ms">
+            <canvas class="card-plate" data-plate="13" aria-label="Botanical illustration"></canvas>
+            <div class="card-body">
+              <h3 class="card-name t-display word-reveal">Design Co-Head</h3>
+              <p class="t-mono t-muted card-type" data-rev style="--d:40ms">Design Domain · Co-Lead</p>
+              <p class="t-mono card-price t-red" data-rev style="--d:80ms">Domain Co-Lead</p>
+            </div>
+          </article>
+
+        </div><!-- /.rail-track -->
+      </div>
+
+      <div class="rail-meter-wrap" aria-hidden="true">
+        <div class="rail-meter-track">
+          <div class="rail-meter-fill" id="rail-meter-fill"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ══════════════════════════════════════════════════════════════════
+     STAGE 4 — ARTIFACT
+══════════════════════════════════════════════════════════════════ -->
+  <section id="stage-artifact" class="stage" aria-label="About DevOps Club">
+    <div class="stage-inner">
+
+      <div class="artifact-copy">
+        <p class="t-mono t-muted artifact-kicker" data-rev style="--d:0ms">Bridging Development & Operations</p>
+        <h2 class="artifact-headline t-display word-reveal" id="artifact-headline">About Our Club</h2>
+
+        <div class="artifact-cues" role="list" aria-label="Club core pillars">
+          <div class="cue" id="cue-0" role="listitem" data-rev style="--d:60ms">
+            <span class="cue-dot" aria-hidden="true"></span>
+            <span class="t-mono cue-label">Learn & Build</span>
+          </div>
+          <div class="cue" id="cue-1" role="listitem" data-rev style="--d:100ms">
+            <span class="cue-dot" aria-hidden="true"></span>
+            <span class="t-mono cue-label">Automate & Scale</span>
+          </div>
+          <div class="cue" id="cue-2" role="listitem" data-rev style="--d:140ms">
+            <span class="cue-dot" aria-hidden="true"></span>
+            <span class="t-mono cue-label">Open Source Culture</span>
+          </div>
+          <div class="cue" id="cue-3" role="listitem" data-rev style="--d:180ms">
+            <span class="cue-dot" aria-hidden="true"></span>
+            <span class="t-mono cue-label">Peer Collaboration</span>
+          </div>
+        </div>
+
+        <p class="t-mono artifact-status t-red" id="artifact-status" aria-live="polite"></p>
+      </div>
+
+      <div class="artifact-packet-wrap" aria-hidden="true">
+        <div class="packet" id="packet">
+          <div class="packet-head">
+            <div class="t-mono packet-head-mono">Bennett Univ — Chapter <span id="pkt-lot">ACTIVE</span></div>
+            <div class="packet-head-name t-display">DevOps Community</div>
+          </div>
+          <img class="packet-plate" src="img/devops-logo.png" alt="DevOps Club logo">
+          <div class="packet-foot">
+            <div class="packet-foot-row" data-rev style="--d:0ms">
+              <span class="t-mono packet-foot-key">Focus Area</span>
+              <span class="t-mono packet-foot-val t-red" id="pkt-germ">Cloud & DevOps</span>
+            </div>
+            <div class="packet-foot-row" data-rev style="--d:40ms">
+              <span class="t-mono packet-foot-key">Eligibility</span>
+              <span class="t-mono packet-foot-val t-red" id="pkt-sow">Open To All</span>
+            </div>
+            <div class="packet-foot-row" data-rev style="--d:80ms">
+              <span class="t-mono packet-foot-key">Motto</span>
+              <span class="t-mono packet-foot-val" id="pkt-date">Deploy Success</span>
+            </div>
+          </div>
+          <div class="packet-perf" id="packet-perf" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="artifact-meter-wrap" aria-hidden="true">
+        <div class="artifact-meter-track">
+          <div class="artifact-meter-fill" id="artifact-meter-fill"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+     STAGE 5 — SEASON BAND
+══════════════════════════════════════════════════════════════════ -->
+  <section id="stage-season" class="stage" aria-label="DevOps Roadmap">
+    <div class="stage-inner">
+      <canvas id="season-canvas" aria-hidden="true"></canvas>
+
+      <div class="season-content">
+        <h2 class="season-headline t-display word-reveal" id="season-headline">The DevOps Journey</h2>
+
+        <div class="season-chapters" role="list" aria-label="DevOps journey chapters">
+          <div class="chapter active" id="chapter-0" role="listitem" data-rev style="--d:0ms">
+            <span class="t-mono t-muted chapter-label">I — Foundation</span>
+            <div class="chapter-title t-display word-reveal">Learn &amp; Master</div>
+            <p class="chapter-body">Start with the core building blocks: Linux administration, Git version control,
+              basic networking, and shell scripting. Understand how software moves from code to execution.</p>
+          </div>
+          <div class="chapter" id="chapter-1" role="listitem" data-rev style="--d:80ms">
+            <span class="t-mono t-muted chapter-label">II — Automation</span>
+            <div class="chapter-title t-display word-reveal">Build &amp; Containerize</div>
+            <p class="chapter-body">Package applications with Docker, design automated CI/CD pipelines with Jenkins and
+              GitHub Actions, and manage infrastructure dynamically using Terraform and Ansible.</p>
+          </div>
+          <div class="chapter" id="chapter-2" role="listitem" data-rev style="--d:160ms">
+            <span class="chapter-label t-mono t-muted">III — Orchestration</span>
+            <div class="chapter-title t-display word-reveal">Deploy &amp; Scale</div>
+            <p class="chapter-body">Orchestrate complex cloud infrastructure using Kubernetes, implement GitOps
+              workflows with ArgoCD, and monitor application health with Prometheus and Grafana.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+     PRICE TABLE
+══════════════════════════════════════════════════════════════════ -->
+  <section id="section-price" class="section-price" aria-label="Events Schedule">
+    <h2 class="section-heading t-display word-reveal" id="price-heading">Upcoming Events</h2>
+    <table class="price-table" aria-label="DevOps Club Events Schedule">
+      <thead>
+        <tr>
+          <th scope="col" data-rev style="--d:0ms">Event Name</th>
+          <th scope="col" data-rev style="--d:40ms">Type</th>
+          <th scope="col" data-rev style="--d:80ms">Venue</th>
+          <th scope="col" data-rev style="--d:120ms">Tentative Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-rev style="--d:0ms">
+          <td>DevOpsOps Quest 2026</td>
+          <td class="t-muted">Workshop + Treasure Hunt</td>
+          <td class="t-muted">P-LH-101</td>
+          <td class="price-val">Oct 23, 2026</td>
+        </tr>
+        <tr data-rev style="--d:40ms">
+          <td>Docker & K8s Hands-On</td>
+          <td class="t-muted">Technical Workshop</td>
+          <td class="t-muted">A-LH-002</td>
+          <td class="price-val">Nov 05, 2026</td>
+        </tr>
+        <tr data-rev style="--d:80ms">
+          <td>CI/CD Pipeline Bootcamp</td>
+          <td class="t-muted">Hands-on Session</td>
+          <td class="t-muted">N-CC-010</td>
+          <td class="price-val">Nov 18, 2026</td>
+        </tr>
+        <tr data-rev style="--d:120ms">
+          <td>Cloud Infrastructure Summit</td>
+          <td class="t-muted">Guest Lecture & Panel</td>
+          <td class="t-muted">N-LH-101</td>
+          <td class="price-val">Dec 02, 2026</td>
+        </tr>
+        <tr data-rev style="--d:160ms">
+          <td>Ace the Specialization</td>
+          <td class="t-muted">Lecture & Queries</td>
+          <td class="t-muted">P-CC-018</td>
+          <td class="price-val">Dec 15, 2026</td>
+        </tr>
+        <tr data-rev style="--d:200ms">
+          <td>DevOps Night Hack</td>
+          <td class="t-muted">Flagship Hackathon</td>
+          <td class="t-muted">Whole P Block</td>
+          <td class="price-val">Jan 10-11, 2027</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+     FAQ
+══════════════════════════════════════════════════════════════════ -->
+  <section class="section-faq" aria-label="Frequently asked questions">
+    <h2 class="section-heading t-display word-reveal" id="faq-heading">Frequently Asked Questions</h2>
+
+    <div class="faq-item" data-rev style="--d:0ms">
+      <details>
+        <summary>Are the workshops and events free to attend?</summary>
+        <div class="faq-answer">Yes, all our workshops, bootcamps, and club events are completely free for university
+          students. Everyone is welcome to attend and learn without any entry fee.</div>
+      </details>
+    </div>
+
+    <div class="faq-item" data-rev style="--d:60ms">
+      <details>
+        <summary>Do I need prior knowledge, or do you teach from basics?</summary>
+        <div class="faq-answer">No prior knowledge is required! We teach everything from absolute scratch—covering basic
+          Linux commands, Git, Docker, and core DevOps fundamentals before moving to advanced topics.</div>
+      </details>
+    </div>
+
+    <div class="faq-item" data-rev style="--d:120ms">
+      <details>
+        <summary>Can I join as a Core Team member right now?</summary>
+        <div class="faq-answer">The Core and Junior Core positions are currently filled for this tenure. However, you
+          can actively work with us on projects and events as a contributor to prepare for the next tenure recruitment!
+        </div>
+      </details>
+    </div>
+
+    <div class="faq-item" data-rev style="--d:180ms">
+      <details>
+        <summary>How can I work with Tech, Design, Management, or PR?</summary>
+        <div class="faq-answer">If you have technical project ideas, design assets, or want to help manage events,
+          directly contact the respective Domain Head or Co-Head to start working together on active tasks.</div>
+      </details>
+    </div>
+
+    <div class="faq-item" data-rev style="--d:240ms">
+      <details>
+        <summary>When will recruitments open for the next Core Team?</summary>
+        <div class="faq-answer">Recruitments for the next tenure will open toward the end of the current term. Students
+          who actively collaborate with our domain heads throughout the year will be given strong preference.</div>
+      </details>
+    </div>
+  </section>
+  <!-- ══════════════════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════════════════ -->
+  <footer aria-label="Site footer">
+    <div class="footer-grid">
+      <div data-rev style="--d:0ms">
+        <div class="footer-brand-name"><img src="img/devops-logo.png" alt="" class="footer-logo">DevOps
+          <span>Club</span></div>
+        <p class="footer-tagline">Building the future of cloud computing, infrastructure as code, and open-source
+          collaboration. Empowering students with hands-on technical skills and community-driven learning.</p>
+      </div>
+      <div data-rev style="--d:60ms">
+        <span class="footer-col-head t-mono">Explore</span>
+        <ul class="footer-links">
+          <li data-rev style="--d:80ms"><a href="#stage-rail">Positions</a></li>
+          <li data-rev style="--d:120ms"><a href="#section-price">Upcoming Events</a></li>
+          <li data-rev style="--d:160ms"><a href="#faq-heading">FAQs</a></li>
+          <li data-rev style="--d:200ms"><a href="#">Projects</a></li>
+        </ul>
+      </div>
+      <div data-rev style="--d:120ms">
+        <span class="footer-col-head t-mono">Domains</span>
+        <ul class="footer-links">
+          <li data-rev style="--d:140ms"><a href="#">Technical Team</a></li>
+          <li data-rev style="--d:180ms"><a href="#">Design Team</a></li>
+          <li data-rev style="--d:220ms"><a href="#">Management Team</a></li>
+          <li data-rev style="--d:260ms"><a href="#">PR & Outreach</a></li>
+        </ul>
+      </div>
+      <div data-rev style="--d:180ms">
+        <span class="footer-col-head t-mono">Connect</span>
+        <ul class="footer-links">
+          <li data-rev style="--d:200ms"><a href="https://www.instagram.com/devopsbu/" target="_blank"
+              rel="noopener noreferrer">Instagram</a></li>
+          <li data-rev style="--d:240ms"><a href="https://chat.whatsapp.com/C5olYfrrKL39lBwEjdKA5Y?mode=gi_t"
+              target="_blank" rel="noopener noreferrer">WhatsApp Community</a></li>
+          <li data-rev style="--d:280ms"><a href="#">GitHub</a></li>
+          <li data-rev style="--d:320ms"><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy t-mono t-muted" data-rev style="--d:0ms">© 2026 DevOps Club. All rights reserved. |
+        Designed & Developed by <a href="https://arpanelfranklin.in" target="_blank" rel="noopener noreferrer"
+          style="color: inherit; text-decoration: underline;">Arpanel Franklin</a></span>
+      <span class="t-mono t-muted" data-rev style="--d:60ms">Automate · Deploy · Scale · Bennett University</span>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ── HELPERS ──────────────────────────────────────────────────── */
+      const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+      const lerp = (a, b, t) => a + (b - a) * t;
+      const ease = t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; // ease-in-out quad
+
+      function stageProgress(el) {
+        const scrollY = window.scrollY;
+        const top = el.offsetTop;
+        const height = el.offsetHeight;
+        const vh = window.innerHeight;
+        // progress 0→1 over the scrollable range of the stage
+        return clamp((scrollY - top) / (height - vh), 0, 1);
+      }
+
+      /* ── SIZE POSTER LINES ────────────────────────────────────────── */
+      function checkPosterOverflow() {
+        ['hero-eyebrow', 'hero-brand'].forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          if (el.scrollWidth > el.clientWidth) {
+            // reduce font-size iteratively
+            let fs = parseFloat(getComputedStyle(el).fontSize);
+            while (el.scrollWidth > el.clientWidth && fs > 8) {
+              fs -= 1;
+              el.style.fontSize = fs + 'px';
+            }
+          }
+        });
+      }
+
+      /* ── WORD SPLIT ───────────────────────────────────────────────── */
+      function splitWords() {
+        document.querySelectorAll('.word-reveal').forEach(el => {
+          if (el.dataset.split) return;
+          el.dataset.split = '1';
+          const text = el.textContent;
+          el.textContent = '';
+          text.split(' ').forEach((w, i) => {
+            const span = document.createElement('span');
+            span.className = 'word';
+            span.style.setProperty('--d', (i * 38) + 'ms');
+            span.textContent = w;
+            el.appendChild(span);
+            if (i < text.split(' ').length - 1) el.appendChild(document.createTextNode(' '));
+          });
+        });
+      }
+
+      /* ── INTERSECTION OBSERVER for data-rev + .word-reveal ───────── */
+      function initRevealObserver() {
+        const io = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            el.classList.add('revealed');
+            io.unobserve(el);
+          });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('[data-rev], .word-reveal').forEach(el => io.observe(el));
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         CANVAS: HERO — tilled soil strokes
+      ══════════════════════════════════════════════════════════════ */
+      /* ══ HERO: Liquid Ether (WebGL) ══ */
+(function initEther() {
+  const cfg = {
+    colors: ['#5b9bd5', '#a97bff', '#6d2fc9'],
+    autoDemo: true, autoSpeed: 0.5, autoIntensity: 2.2,
+    takeoverDuration: 250, autoResumeDelay: 1000, autoRampDuration: 600, // ms
+    intensity: 0.8,    // overall brightness
+    resolution: 0.5    // render scale; lower = faster
+  };
+  const canvas = document.getElementById('ether-canvas');
+  const hero = document.getElementById('stage-hero');
+  if (!canvas || !hero) return;
+  const gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
+  if (!gl) return;
+
+  const N = 20;
+  const FS = `
+  #ifdef GL_FRAGMENT_PRECISION_HIGH
+  precision highp float;
+  #else
+  precision mediump float;
+  #endif
+  uniform vec2 uRes; uniform float uTime, uInt;
+  uniform vec3 uC0, uC1, uC2;
+  uniform vec4 uTrail[${N}];
+  float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453); }
+  float noise(vec2 p){
+    vec2 i = floor(p), f = fract(p); f = f*f*(3.-2.*f);
+    return mix(mix(hash(i), hash(i+vec2(1,0)), f.x), mix(hash(i+vec2(0,1)), hash(i+vec2(1,1)), f.x), f.y);
+  }
+  float fbm(vec2 p){ float v=0., a=.5; for(int i=0;i<4;i++){ v+=a*noise(p); p=p*2.02+vec2(17.,9.); a*=.5; } return v; }
+  void main(){
+    float asp = uRes.x / uRes.y;
+    vec2 uv = gl_FragCoord.xy / uRes;
+    vec2 p = (uv - .5) * vec2(asp, 1.);
+    vec2 disp = vec2(0.);
+    for(int i=0;i<${N};i++){
+      vec2 m = (uTrail[i].xy - .5) * vec2(asp, 1.);
+      vec2 d = p - m;
+      disp += uTrail[i].zw * exp(-dot(d,d) * 14.);
+    }
+    p -= disp;
+    float t = uTime * .06;
+    vec2 q = vec2(fbm(p*1.6 + vec2(0.,t)), fbm(p*1.6 + vec2(5.2,1.3) - t));
+    vec2 r = vec2(fbm(p*1.6 + 3.*q + vec2(1.7,9.2) + t*1.3), fbm(p*1.6 + 3.*q + vec2(8.3,2.8) - t));
+    float f = fbm(p*1.6 + 3.*r);
+    vec3 col = mix(uC0, uC1, clamp(f*1.6 - .1, 0., 1.));
+    col = mix(col, uC2, clamp(length(q)*.9, 0., 1.) * .7);
+    float glow = smoothstep(.35, .9, f);
+    gl_FragColor = vec4(vec3(.043,.039,.078) + col * (glow + .06) * uInt, 1.);
+  }`;
+
+  const sh = (type, src) => {
+    const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.warn(gl.getShaderInfoLog(s)); return null; }
+    return s;
+  };
+  const vs = sh(gl.VERTEX_SHADER, 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}');
+  const fs = sh(gl.FRAGMENT_SHADER, FS);
+  if (!vs || !fs) return;
+  const prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+  gl.useProgram(prog);
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, 'p');
+  gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+  const U = n => gl.getUniformLocation(prog, n);
+  const uRes = U('uRes'), uTime = U('uTime'), uTrail = U('uTrail');
+  const hex = h => [1,3,5].map(i => parseInt(h.slice(i, i+2), 16) / 255);
+  ['uC0','uC1','uC2'].forEach((n, i) => gl.uniform3fv(U(n), hex(cfg.colors[i % cfg.colors.length])));
+  gl.uniform1f(U('uInt'), cfg.intensity);
+
+  const trail = new Float32Array(N * 4);
+  for (let i = 0; i < N; i++) { trail[i*4] = .5; trail[i*4+1] = .5; }
+  const user = { x: .5, y: .5 }, prev = { x: .5, y: .5 };
+  let lastMove = -1e9, blend = 0, last = performance.now(), running = false, raf = 0, aspect = 1;
+  const t0 = last;
+
+  addEventListener('pointermove', e => {
+    const r = canvas.getBoundingClientRect();
+    if (e.clientY < r.top || e.clientY > r.bottom) return;
+    user.x = (e.clientX - r.left) / r.width;
+    user.y = 1 - (e.clientY - r.top) / r.height;
+    lastMove = performance.now();
+  }, { passive: true });
+
+  function resize() {
+    const w = Math.max(2, Math.round(canvas.clientWidth * cfg.resolution));
+    const h = Math.max(2, Math.round(canvas.clientHeight * cfg.resolution));
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w; canvas.height = h;
+      gl.viewport(0, 0, w, h); gl.uniform2f(uRes, w, h);
+    }
+    aspect = w / h;
+  }
+
+  function draw(now) {
+    const dt = Math.min(64, now - last); last = now;
+    const idle = cfg.autoDemo && now - lastMove > cfg.autoResumeDelay;
+    const dur = Math.max(1, idle ? cfg.autoRampDuration : cfg.takeoverDuration);
+    blend += ((idle ? 0 : 1) - blend) * Math.min(1, dt / dur);
+    const ts = now * 0.001 * cfg.autoSpeed;
+    const ax = .5 + .34 * Math.sin(ts * 1.3), ay = .5 + .24 * Math.sin(ts * 1.9 + 1);
+    const x = ax + (user.x - ax) * blend, y = ay + (user.y - ay) * blend;
+    const k = 6 * (1 + (cfg.autoIntensity - 1) * (1 - blend));
+    let vx = (x - prev.x) * aspect * k, vy = (y - prev.y) * k;
+    const m = Math.hypot(vx, vy);
+    if (m > .3) { vx *= .3 / m; vy *= .3 / m; }
+    prev.x = x; prev.y = y;
+
+    trail.copyWithin(4, 0, (N - 1) * 4);
+    trail[0] = x; trail[1] = y; trail[2] = vx; trail[3] = vy;
+    for (let i = 1; i < N; i++) { trail[i*4+2] *= .9; trail[i*4+3] *= .9; }
+
+    gl.uniform1f(uTime, (now - t0) * 0.001);
+    gl.uniform4fv(uTrail, trail);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+  function frame(now) { if (!running) return; raf = requestAnimationFrame(frame); draw(now); }
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const start = () => { if (!running && !reduce) { running = true; last = performance.now(); raf = requestAnimationFrame(frame); } };
+  const stop  = () => { running = false; cancelAnimationFrame(raf); };
+
+  let inView = true;
+  new IntersectionObserver(([e]) => { inView = e.isIntersecting; inView && !document.hidden ? start() : stop(); }, { threshold: 0.01 }).observe(hero);
+  document.addEventListener('visibilitychange', () => (inView && !document.hidden) ? start() : stop());
+  addEventListener('resize', () => { resize(); if (reduce) draw(performance.now()); }, { passive: true });
+
+  resize();
+  if (reduce) draw(2000); else start();   // reduced motion: one still frame
+})();
+
+
+      /* ══════════════════════════════════════════════════════════════
+         CANVAS: CARD PLATES — botanical illustration style
+      ══════════════════════════════════════════════════════════════ */
+      const PLATE_PALETTE = [
+        ['#b6c89a', '#7a9e5f', '#3d6b2a'],   // green
+        ['#e8c87d', '#d4a63a', '#9c7824'],   // gold
+        ['#d98080', '#b94040', '#7a1c1c'],   // red
+        ['#9abfd4', '#5a8ba6', '#2c5f78'],   // blue
+        ['#e88a6a', '#c45c34', '#7a2e10'],   // orange
+        ['#b0d4b0', '#6aaa6a', '#2e6e2e'],   // green2
+      ];
+
+      function drawCardPlate(canvas, idx) {
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width = canvas.offsetWidth;
+        const h = canvas.height = canvas.offsetHeight;
+        const pal = PLATE_PALETTE[idx % PLATE_PALETTE.length];
+        const rng = mulberry32(idx * 1000 + 77);
+
+        // cream ground
+        ctx.fillStyle = '#f4f0e6';
+        ctx.fillRect(0, 0, w, h);
+
+        // thin crosshatch lines
+        ctx.strokeStyle = 'rgba(23,23,23,.06)';
+        ctx.lineWidth = 0.5;
+        const step = 14;
+        for (let x = 0; x < w; x += step) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+        for (let y = 0; y < h; y += step) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+
+        // central botanical form
+        const cx = w * 0.5, cy = h * 0.52;
+        const variants = [drawTomato, drawBean, drawBeet, drawCorn, drawPod, drawLeaf];
+        (variants[idx % variants.length])(ctx, cx, cy, w, h, pal, rng);
+
+        // border rule
+        ctx.strokeStyle = 'rgba(23,23,23,.3)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(4, 4, w - 8, h - 8);
+      }
+
+      function mulberry32(a) {
+        return function () {
+          a |= 0; a = a + 0x6D2B79F5 | 0;
+          var t = Math.imul(a ^ a >>> 15, 1 | a);
+          t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+          return ((t ^ t >>> 14) >>> 0) / 4294967296;
+        };
+      }
+
+      function drawTomato(ctx, cx, cy, w, h, pal, rng) {
+        const r = Math.min(w, h) * 0.28;
+        // body
+        ctx.beginPath(); ctx.arc(cx, cy + r * 0.1, r, 0, Math.PI * 2);
+        ctx.fillStyle = pal[0]; ctx.fill();
+        ctx.strokeStyle = pal[2]; ctx.lineWidth = 1.5; ctx.stroke();
+        // highlight
+        ctx.beginPath(); ctx.arc(cx - r * 0.25, cy - r * 0.1, r * 0.18, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,.35)'; ctx.fill();
+        // stem
+        ctx.beginPath(); ctx.moveTo(cx, cy - r * 0.9); ctx.lineTo(cx, cy - r * 1.4);
+        ctx.strokeStyle = pal[2]; ctx.lineWidth = 2; ctx.stroke();
+        // leaf spikes
+        for (let i = -2; i <= 2; i++) {
+          ctx.beginPath();
+          ctx.moveTo(cx, cy - r * 0.9);
+          ctx.lineTo(cx + i * r * 0.35, cy - r * 1.35 - Math.abs(i) * r * 0.12);
+          ctx.strokeStyle = pal[2]; ctx.lineWidth = 1; ctx.stroke();
+        }
+      }
+
+      function drawBean(ctx, cx, cy, w, h, pal, rng) {
+        const l = Math.min(w, h) * 0.38;
+        ctx.save(); ctx.translate(cx, cy); ctx.rotate(-0.4);
+        // pod
+        ctx.beginPath();
+        ctx.moveTo(-l, 0);
+        ctx.bezierCurveTo(-l * 0.5, -l * 0.22, l * 0.5, -l * 0.22, l, 0);
+        ctx.bezierCurveTo(l * 0.5, l * 0.22, -l * 0.5, l * 0.22, -l, 0);
+        ctx.fillStyle = pal[0]; ctx.fill(); ctx.strokeStyle = pal[2]; ctx.lineWidth = 1.5; ctx.stroke();
+        // bumps for seeds
+        for (let i = -2; i <= 2; i++) {
+          ctx.beginPath(); ctx.arc(i * l * 0.32, 0, l * 0.07, 0, Math.PI * 2);
+          ctx.strokeStyle = pal[2]; ctx.lineWidth = 1; ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      function drawBeet(ctx, cx, cy, w, h, pal, rng) {
+        const r = Math.min(w, h) * 0.26;
+        // root
+        ctx.beginPath(); ctx.arc(cx, cy + r * 0.3, r, 0, Math.PI * 2);
+        ctx.fillStyle = pal[1]; ctx.fill(); ctx.strokeStyle = pal[2]; ctx.lineWidth = 1.5; ctx.stroke();
+        // concentric rings (chioggia)
+        for (let i = 1; i <= 3; i++) {
+          ctx.beginPath(); ctx.arc(cx, cy + r * 0.3, r * (1 - i * 0.22), 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(251,250,255,.5)'; ctx.lineWidth = 1; ctx.stroke();
+        }
+        // tap root
+        ctx.beginPath(); ctx.moveTo(cx, cy + r * 1.3); ctx.lineTo(cx, cy + r * 1.7);
+        ctx.strokeStyle = pal[2]; ctx.lineWidth = 1.5; ctx.stroke();
+        // stems
+        for (let i = -1; i <= 1; i++) {
+          ctx.beginPath(); ctx.moveTo(cx + i * r * 0.3, cy - r * 0.7);
+          ctx.bezierCurveTo(cx + i * r * 0.6, cy - r * 1.1, cx + i * r * 1.0, cy - r * 1.3, cx + i * r * 1.2, cy - r * 1.7);
+          ctx.strokeStyle = pal[0]; ctx.lineWidth = 1.5; ctx.stroke();
+        }
+      }
+
+      function drawCorn(ctx, cx, cy, w, h, pal, rng) {
+        const l = Math.min(w, h) * 0.42;
+        const rw = l * 0.26;
+        // ear body
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, rw, l * 0.5, 0, 0, Math.PI * 2);
+        ctx.fillStyle = pal[0]; ctx.fill(); ctx.strokeStyle = pal[2]; ctx.lineWidth = 1.5; ctx.stroke();
+        // kernel rows
+        const rows = 8, cols = 5;
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const kx = cx + (c - cols / 2 + 0.5) * rw * 0.4;
+            const ky = cy - l * 0.44 + r * l * 0.88 / (rows - 1);
+            ctx.beginPath(); ctx.ellipse(kx, ky, rw * 0.08, rw * 0.1, 0, 0, Math.PI * 2);
+            ctx.fillStyle = PLATE_PALETTE[(r * cols + c) % PLATE_PALETTE.length][1]; ctx.fill();
+            ctx.strokeStyle = pal[2]; ctx.lineWidth = 0.5; ctx.stroke();
+          }
+        }
+        // husk
+        ctx.beginPath();
+        ctx.moveTo(cx - rw, cy + l * 0.3);
+        ctx.bezierCurveTo(cx - rw * 2, cy + l * 0.1, cx - rw * 2.2, cy - l * 0.5, cx, cy - l * 0.55);
+        ctx.strokeStyle = pal[2]; ctx.lineWidth = 1; ctx.stroke();
+      }
+
+      function drawPod(ctx, cx, cy, w, h, pal, rng) {
+        const l = Math.min(w, h) * 0.35;
+        ctx.save(); ctx.translate(cx, cy); ctx.rotate(0.3);
+        ctx.beginPath();
+        ctx.moveTo(0, -l);
+        ctx.bezierCurveTo(l * 0.5, -l * 0.6, l * 0.5, l * 0.6, 0, l);
+        ctx.bezierCurveTo(-l * 0.5, l * 0.6, -l * 0.5, -l * 0.6, 0, -l);
+        ctx.fillStyle = pal[0]; ctx.fill(); ctx.strokeStyle = pal[2]; ctx.lineWidth = 1.5; ctx.stroke();
+        for (let i = -2; i <= 2; i++) {
+          const yy = i * l * 0.35;
+          ctx.beginPath(); ctx.arc(0, yy, l * 0.08, 0, Math.PI * 2);
+          ctx.strokeStyle = pal[1]; ctx.lineWidth = 1; ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      function drawLeaf(ctx, cx, cy, w, h, pal, rng) {
+        const l = Math.min(w, h) * 0.4;
+        ctx.save(); ctx.translate(cx, cy);
+        for (let i = -1; i <= 1; i++) {
+          ctx.save(); ctx.rotate(i * 0.45);
+          ctx.beginPath();
+          ctx.moveTo(0, l * 0.5);
+          ctx.bezierCurveTo(l * 0.5, l * 0.2, l * 0.55, -l * 0.3, 0, -l * 0.5);
+          ctx.bezierCurveTo(-l * 0.55, -l * 0.3, -l * 0.5, l * 0.2, 0, l * 0.5);
+          ctx.fillStyle = i === 0 ? pal[0] : pal[1]; ctx.fill();
+          ctx.strokeStyle = pal[2]; ctx.lineWidth = 1.2; ctx.stroke();
+          // midrib
+          ctx.beginPath(); ctx.moveTo(0, l * 0.45); ctx.lineTo(0, -l * 0.45);
+          ctx.strokeStyle = pal[2]; ctx.lineWidth = 0.8; ctx.stroke();
+          ctx.restore();
+        }
+        ctx.restore();
+      }
+
+      // Map card index → person. Index = order of the cards (0 President … 13 Design Co-Head)
+    //   const TEAM = {
+    //     4: { photo: 'team/arpanel-franklin.png', name: 'Arpanel Franklin' },  // Tech Head
+    //     // 0: { photo: 'team/president.jpg', name: 'Full Name' },
+    //     // 1: { photo: 'team/vp.jpg',        name: 'Full Name' },
+    //   };
+
+    //   const SILHOUETTE = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+    //     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">' +
+    //     '<rect width="400" height="300" fill="#d9d4c9"/>' +
+    //     '<circle cx="200" cy="120" r="48" fill="#b5afa3"/>' +
+    //     '<path d="M90 300c0-70 50-110 110-110s110 40 110 110z" fill="#b5afa3"/></svg>'
+    //   );
+
+    //   function initCardPlates() {
+    //     document.querySelectorAll('canvas.card-plate').forEach(canvas => {
+    //       const idx = parseInt(canvas.dataset.plate || '0', 10);
+    //       const person = TEAM[idx];
+    //       const card = canvas.closest('.card');
+    //       const role = card.querySelector('.card-name').textContent.trim();
+
+    //       const img = new Image();
+    //       img.className = 'card-photo' + (person ? '' : ' is-empty');
+    //       img.loading = 'lazy';
+    //       img.decoding = 'async';
+    //       img.src = person ? person.photo : SILHOUETTE;
+    //       img.alt = person ? person.name + ', ' + role : role + ' (photo coming soon)';
+    //       canvas.replaceWith(img);
+
+    //       if (person) {
+    //         const p = document.createElement('p');
+    //         p.className = 't-mono person-name';
+    //         p.textContent = person.name;
+    //         card.querySelector('.card-type').after(p);
+    //       }
+    //     });
+    //   }
+
+    // Key = exact position name on the card. Fill links with full URLs; empty ones are skipped.
+const TEAM = {
+  'President':           { name:'Saksham Bharti',                  photo:'team/president.jpg',          links:{ ig:'', li:'', gh:'' } },
+  'Vice President':      { name:'Yashi Srivastava',  photo:'team/yashi-srivastava.jpg',   links:{ ig:'', li:'', gh:'' } },
+  'General Secretary':   { name:'Tanishq Jindal',    photo:'team/tanishq-jindal.jpg',     links:{ ig:'', li:'', gh:'' } },
+  'Treasurer':           { name:'Tejas Tibrewal',    photo:'team/tejas-tibrewal.jpg',     links:{ ig:'', li:'', gh:'' } },
+
+  'Tech Head': { name:'Arpanel Franklin', photo:'team/arpanel-franklin.jpg',
+  links:{ ig:'https://instagram.com/arpanelfranklin', li:'https://linkedin.com/in/arpanelfranklin', gh:'https://github.com/arpanelfranklin' } },
+
+  'Tech Co-Head':        { name:'Nirbhay',           photo:'team/nirbhay.jpg',            links:{ ig:'https://www.instagram.com/nirbhayymishra_05?stkn=dTV3ZmRueGxlNDVh', li:'https://www.linkedin.com/in/nirbhay-mishra-17407536a?utm_source=share_via&utm_content=profile&utm_medium=member_android', gh:'https://github.com/nirbhay-mishra07' } },
+  'PR Head':             { name:'Khushal Aggarwal',  photo:'team/khushal-aggarwal.jpg',   links:{ ig:'', li:'', gh:'' } },
+  'PR Co-Head':          { name:'Rik',               photo:'teampg/rik.j',                links:{ ig:'', li:'', gh:'' } },
+  'Management Head':     { name:'Tanishq Jindal',             photo:'team/tanishq-jindal.jpg',              links:{ ig:'https://www.instagram.com/tanishq_017?utm_source=qr&stkn=MXgxMjI1Z3p6enl0cA==', li:'https://www.linkedin.com/in/tanishq-jindal-117096325?utm_source=share_via&utm_content=profile&utm_medium=member_android', gh:'https://github.com/Tanishq-Jindal' } },
+  'Management Co-Head':  { name:'Manik',            photo:'team/manik.jpg',             links:{ ig:'', li:'', gh:'' } },
+  'Event Head':       { name:'Samrik', photo:'team/rik.jpg', links:{ ig:'https://www.instagram.com/shecallsmesamrik?stkn=MzRobW9ubzRyZGlv', li:'https://www.linkedin.com/in/samrik-dutta?utm_source=share_via&utm_content=profile&utm_medium=member_android', gh:'https://github.com/rikkycodes' } },
+  // 'Event Co-Head':    { … },
+  // 'Design Head':      { … },
+  // 'Design Co-Head':   { … },
+};
+
+const SILHOUETTE = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">' +
+  '<rect width="400" height="300" fill="#d9d4c9"/>' +
+  '<circle cx="200" cy="120" r="48" fill="#b5afa3"/>' +
+  '<path d="M90 300c0-70 50-110 110-110s110 40 110 110z" fill="#b5afa3"/></svg>'
+);
+
+const SOCIAL = {
+  ig: { label:'Instagram', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg>' },
+  li: { label:'LinkedIn', icon:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="9" width="4" height="12"/><circle cx="5" cy="5" r="2"/><path d="M10 9h4v2c.8-1.4 2.3-2.2 4-2.2 3 0 4 2 4 5V21h-4v-6c0-1.5-.5-2.5-2-2.5S14 13.5 14 15v6h-4z"/></svg>' },
+  gh: { label:'GitHub', icon:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>' },
+};
+
+function makeSocials(links, who) {
+  const keys = Object.keys(SOCIAL).filter(k => links && links[k]);
+  if (!keys.length) return null;                       // no links → keep the old label
+  const d = document.createElement('div');
+  d.className = 'socials';
+  d.setAttribute('data-rev', '');
+  d.style.setProperty('--d', '80ms');
+  keys.forEach(k => {
+    const a = document.createElement('a');
+    a.href = links[k]; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.title = SOCIAL[k].label;
+    a.setAttribute('aria-label', (who || 'Team member') + ' on ' + SOCIAL[k].label);
+    a.innerHTML = SOCIAL[k].icon;
+    d.appendChild(a);
+  });
+  return d;
+}
+
+function initCardPlates() {
+  document.querySelectorAll('canvas.card-plate').forEach(canvas => {
+    const card   = canvas.closest('.card');
+    const role   = card.querySelector('.card-name').textContent.trim();
+    const person = TEAM[role];
+
+    const img = new Image();
+    img.className = 'card-photo' + (person ? '' : ' is-empty');
+    img.loading   = 'lazy';
+    img.decoding  = 'async';
+    img.src       = person ? person.photo : SILHOUETTE;
+    img.alt       = person ? (person.name ? person.name + ', ' : '') + role : role + ' (photo coming soon)';
+    img.onerror   = () => { img.onerror = null; img.src = SILHOUETTE; img.classList.add('is-empty'); };
+    canvas.replaceWith(img);
+
+    if (!person) return;
+    if (person.name) {
+      const p = document.createElement('p');
+      p.className = 't-mono person-name';
+      p.textContent = person.name;
+      card.querySelector('.card-type').after(p);
+    }
+    const row = makeSocials(person.links, person.name);
+    if (row) card.querySelector('.card-price').replaceWith(row);   // icons replace "Core Council / Domain Lead"
+  });
+}
+      /* ══════════════════════════════════════════════════════════════
+         CANVAS: PACKET PLATE
+      ══════════════════════════════════════════════════════════════ */
+      function initPacketPlate() {
+        const canvas = document.getElementById('packet-plate');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width = canvas.offsetWidth;
+        const h = canvas.height = canvas.offsetHeight;
+        const pal = PLATE_PALETTE[0];
+        const rng = mulberry32(42);
+
+        ctx.fillStyle = '#f4f0e6'; ctx.fillRect(0, 0, w, h);
+        ctx.strokeStyle = 'rgba(23,23,23,.05)'; ctx.lineWidth = 0.5;
+        const step = 10;
+        for (let x = 0; x < w; x += step) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+        for (let y = 0; y < h; y += step) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+
+        drawTomato(ctx, w * 0.5, h * 0.5, w, h, pal, rng);
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         CANVAS: SEASON CONTOURS
+      ══════════════════════════════════════════════════════════════ */
+      (function initSeasonCanvas() {
+        const canvas = document.getElementById('season-canvas');
+        const ctx = canvas.getContext('2d');
+        let w, h;
+        const LINES = 22;
+
+        function build() {
+          w = canvas.width = canvas.offsetWidth;
+          h = canvas.height = canvas.offsetHeight;
+        }
+
+        function draw(t) {
+          ctx.clearRect(0, 0, w, h);
+          for (let i = 0; i < LINES; i++) {
+            const yBase = (i / (LINES - 1)) * h;
+            const isRed = i % 5 === 0;
+            ctx.beginPath();
+            for (let x = 0; x <= w; x += 4) {
+              const norm = x / w;
+              const y = yBase
+                + Math.sin(norm * Math.PI * 4 + t * 0.4 + i * 0.3) * 18
+                + Math.sin(norm * Math.PI * 1.5 + t * 0.15 + i * 0.5) * 10;
+              x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = isRed ? 'rgba(109,47,201,.2)' : 'rgba(91,155,213,.18)';
+            ctx.lineWidth = isRed ? 1.2 : 0.8;
+            ctx.stroke();
+          }
+        }
+
+        let raf;
+        function loop(ts) { draw(ts / 1000); raf = requestAnimationFrame(loop); }
+        window.addEventListener('resize', build, { passive: true });
+        build();
+        loop(0);
+      })();
+
+      /* ══════════════════════════════════════════════════════════════
+         SCROLL HANDLER — writes all CSS custom properties
+      ══════════════════════════════════════════════════════════════ */
+      const root = document.documentElement;
+      const stageHero = document.getElementById('stage-hero');
+      const stageManifesto = document.getElementById('stage-manifesto');
+      const stageRail = document.getElementById('stage-rail');
+      const stageArtifact = document.getElementById('stage-artifact');
+      const stageSeason = document.getElementById('stage-season');
+      const railTrack = document.getElementById('rail-track');
+      const artifactStatus = document.getElementById('artifact-status');
+
+      // Rail overflow measured once and on resize
+      let railOverflow = 0;
+      function measureRail() {
+        // total track scrollWidth minus one viewport width
+        railOverflow = Math.max(0, railTrack.scrollWidth - window.innerWidth);
+      }
+
+      // Packet phase state
+      let packetPhase = -1;
+      const packetData = {
+        lot: 'ACTIVE',
+        germ: 'Cloud & DevOps',
+        sow: 'Open To All',
+        date: 'Deploy Success',
+      };
+      const cueStatuses = [
+        '— Learn & Build: workshops from zero',
+        '— Automate & Scale: CI/CD and IaC',
+        '— Open source culture: ship in public',
+        '— Peer collaboration: learn together',
+      ];
+
+      function updatePacketPhase(phase) {
+        if (phase === packetPhase) return;
+        packetPhase = phase;
+
+        // Light cues cumulatively
+        for (let i = 0; i < 4; i++) {
+          document.getElementById('cue-' + i).classList.toggle('lit', i <= phase);
+        }
+
+        // Fill printed values by phase
+        const lot = document.getElementById('pkt-lot');
+        const germ = document.getElementById('pkt-germ');
+        const sow = document.getElementById('pkt-sow');
+        const date = document.getElementById('pkt-date');
+
+        lot.textContent = phase >= 2 ? packetData.lot : '——';
+        germ.textContent = phase >= 1 ? packetData.germ : 'Pending';
+        sow.textContent = phase >= 3 ? packetData.sow : '——';
+        date.textContent = phase >= 3 ? packetData.date : '——';
+
+        // Status line
+        if (phase >= 0 && phase < cueStatuses.length) {
+          artifactStatus.textContent = cueStatuses[phase];
+        } else if (phase < 0) {
+          artifactStatus.textContent = '';
+        }
+      }
+
+      function onScroll() {
+        const p1 = stageProgress(stageHero);
+        const p2 = stageProgress(stageManifesto);
+        const p3 = stageProgress(stageRail);
+        const p4 = stageProgress(stageArtifact);
+        const p5 = stageProgress(stageSeason);
+
+        // ── Stage 1: Hero ────────────────────────────────────────────
+        const heroE = ease(p1);
+        root.style.setProperty('--hero-type-y', lerp(0, -90, heroE) + 'px');
+        root.style.setProperty('--hero-type-scale', lerp(1, 0.74, heroE));
+        root.style.setProperty('--hero-type-alpha', clamp(1 - heroE * 2.5, 0, 1));
+        root.style.setProperty('--hero-meta-alpha', clamp(1 - p1 * 3, 0, 1));
+
+        // ── Stage 2: Manifesto ───────────────────────────────────────
+        root.style.setProperty('--manifesto-wipe', clamp(p2 * 120, 0, 100) + '%');
+        root.style.setProperty('--manifesto-scale', lerp(1, 1.05, p2));
+
+        // ── Stage 3: Rail ────────────────────────────────────────────
+        const railX = -(p3 * railOverflow);
+        root.style.setProperty('--rail-x', railX + 'px');
+        root.style.setProperty('--rail-meter', (p3 * 100).toFixed(2) + '%');
+
+        // ── Stage 4: Artifact ────────────────────────────────────────
+        // alpha enters during first 25%
+        const pktAlpha = clamp(p4 * 4, 0, 1);
+        root.style.setProperty('--packet-alpha', pktAlpha);
+        root.style.setProperty('--packet-enter', lerp(38, 0, clamp(p4 * 4, 0, 1)) + 'px');
+        root.style.setProperty('--packet-scale', lerp(0.78, 1, clamp(p4 * 3, 0, 1)));
+        // perforation opens in last 20%
+        const perfProgress = clamp((p4 - 0.8) * 5, 0, 1);
+        root.style.setProperty('--packet-cut', perfProgress);
+        root.style.setProperty('--packet-meter', (p4 * 100).toFixed(2) + '%');
+        root.style.setProperty('--packet-copy-x', lerp(40, 0, clamp(p4 * 4, 0, 1)) + 'px');
+
+        // Phase index: 4 phases across middle 60% of the stage
+        const phaseProgress = clamp((p4 - 0.1) / 0.7, 0, 1);
+        const phase = p4 < 0.05 ? -1 : Math.min(3, Math.floor(phaseProgress * 4));
+        updatePacketPhase(phase);
+
+        // ── Stage 5: Season ──────────────────────────────────────────
+        root.style.setProperty('--season-y', lerp(-4, 4, p5) + '%');
+        root.style.setProperty('--season-scale', lerp(1.10, 1.055, p5));
+
+        // Chapter swapping: exactly ONE active
+        const chapterIdx = clamp(Math.floor(p5 * 3), 0, 2);
+        for (let i = 0; i < 3; i++) {
+          const ch = document.getElementById('chapter-' + i);
+          if (ch) ch.classList.toggle('active', i === chapterIdx);
+        }
+      }
+
+      /* ── RESIZE ─────────────────────────────────────────────────── */
+      function onResize() {
+        measureRail();
+        checkPosterOverflow();
+        // Redraw card plates at new size
+        document.querySelectorAll('.card-plate').forEach(canvas => {
+          const idx = parseInt(canvas.dataset.plate || '0', 10);
+          drawCardPlate(canvas, idx);
+        });
+        initPacketPlate();
+        onScroll();
+      }
+
+      /* ── INIT ────────────────────────────────────────────────────── */
+      splitWords();
+      checkPosterOverflow();
+      initCardPlates();
+      initPacketPlate();
+      initRevealObserver();
+      measureRail();
+      onScroll();
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onResize, { passive: true });
+
+    })();
+  </script>
+</body>
+
+</html>
